@@ -8,20 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		D10B47841F2FEF32009E04F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B47831F2FEF32009E04F6 /* AppDelegate.swift */; };
-		D10B47861F2FEF32009E04F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B47851F2FEF32009E04F6 /* ViewController.swift */; };
+		D10B47861F2FEF32009E04F6 /* CTTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B47851F2FEF32009E04F6 /* CTTableViewController.swift */; };
 		D10B47891F2FEF32009E04F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D10B47871F2FEF32009E04F6 /* Main.storyboard */; };
 		D10B478B1F2FEF32009E04F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D10B478A1F2FEF32009E04F6 /* Assets.xcassets */; };
 		D10B478E1F2FEF32009E04F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D10B478C1F2FEF32009E04F6 /* LaunchScreen.storyboard */; };
+		D10B47961F2FEFD4009E04F6 /* CTTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B47951F2FEFD4009E04F6 /* CTTableViewCell.swift */; };
+		D10B47981F2FF00C009E04F6 /* CTDetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B47971F2FF00C009E04F6 /* CTDetailedViewController.swift */; };
+		D10B479E1F2FF4DC009E04F6 /* CTLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B479D1F2FF4DC009E04F6 /* CTLoginViewController.swift */; };
+		D10B47A01F30136C009E04F6 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B479F1F30136C009E04F6 /* Meal.swift */; };
+		D1235C2C1F30AC9000CDDB79 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1235C2B1F30AC9000CDDB79 /* NetworkManager.swift */; };
+		D1235C2E1F30D26500CDDB79 /* CTSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1235C2D1F30D26500CDDB79 /* CTSignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D10B47801F2FEF32009E04F6 /* Cloud Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cloud Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D10B47831F2FEF32009E04F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D10B47851F2FEF32009E04F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D10B47851F2FEF32009E04F6 /* CTTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTTableViewController.swift; sourceTree = "<group>"; };
 		D10B47881F2FEF32009E04F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D10B478A1F2FEF32009E04F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D10B478D1F2FEF32009E04F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D10B478F1F2FEF32009E04F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D10B47951F2FEFD4009E04F6 /* CTTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTTableViewCell.swift; sourceTree = "<group>"; };
+		D10B47971F2FF00C009E04F6 /* CTDetailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTDetailedViewController.swift; sourceTree = "<group>"; };
+		D10B479D1F2FF4DC009E04F6 /* CTLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTLoginViewController.swift; sourceTree = "<group>"; };
+		D10B479F1F30136C009E04F6 /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		D1235C2B1F30AC9000CDDB79 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D1235C2D1F30D26500CDDB79 /* CTSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTSignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +67,13 @@
 			isa = PBXGroup;
 			children = (
 				D10B47831F2FEF32009E04F6 /* AppDelegate.swift */,
-				D10B47851F2FEF32009E04F6 /* ViewController.swift */,
+				D1235C2D1F30D26500CDDB79 /* CTSignUpViewController.swift */,
+				D10B479D1F2FF4DC009E04F6 /* CTLoginViewController.swift */,
+				D10B47851F2FEF32009E04F6 /* CTTableViewController.swift */,
+				D10B47951F2FEFD4009E04F6 /* CTTableViewCell.swift */,
+				D10B47971F2FF00C009E04F6 /* CTDetailedViewController.swift */,
+				D1235C2B1F30AC9000CDDB79 /* NetworkManager.swift */,
+				D10B479F1F30136C009E04F6 /* Meal.swift */,
 				D10B47871F2FEF32009E04F6 /* Main.storyboard */,
 				D10B478A1F2FEF32009E04F6 /* Assets.xcassets */,
 				D10B478C1F2FEF32009E04F6 /* LaunchScreen.storyboard */,
@@ -137,8 +155,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D10B47861F2FEF32009E04F6 /* ViewController.swift in Sources */,
+				D10B479E1F2FF4DC009E04F6 /* CTLoginViewController.swift in Sources */,
+				D10B47961F2FEFD4009E04F6 /* CTTableViewCell.swift in Sources */,
+				D10B47861F2FEF32009E04F6 /* CTTableViewController.swift in Sources */,
+				D1235C2E1F30D26500CDDB79 /* CTSignUpViewController.swift in Sources */,
+				D1235C2C1F30AC9000CDDB79 /* NetworkManager.swift in Sources */,
 				D10B47841F2FEF32009E04F6 /* AppDelegate.swift in Sources */,
+				D10B47A01F30136C009E04F6 /* Meal.swift in Sources */,
+				D10B47981F2FF00C009E04F6 /* CTDetailedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +326,7 @@
 				D10B47941F2FEF32009E04F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
