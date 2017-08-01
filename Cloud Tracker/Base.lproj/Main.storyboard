@@ -10,6 +10,72 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Detailed View Controller-->
+        <scene sceneID="C37-gB-Oja">
+            <objects>
+                <viewController id="eVm-C9-6hK" customClass="CTDetailedViewController" customModule="Cloud_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mTr-wo-hbC"/>
+                        <viewControllerLayoutGuide type="bottom" id="vFR-dE-5DP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OHj-WF-N3P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-Kr-BAT">
+                                <rect key="frame" x="16" y="82" width="343" height="240"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzd-5J-f8U">
+                                <rect key="frame" x="22" y="346" width="331" height="163"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="163" id="0eN-SR-Sm6"/>
+                                </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★★★★★" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGh-IG-qHv">
+                                <rect key="frame" x="44" y="559" width="287" height="78"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="65"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calories:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4PM-hE-aAO">
+                                <rect key="frame" x="104" y="530" width="166" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4PM-hE-aAO" firstAttribute="leading" secondItem="OHj-WF-N3P" secondAttribute="leadingMargin" constant="88" id="020-K7-AzI"/>
+                            <constraint firstItem="8oD-Kr-BAT" firstAttribute="centerX" secondItem="Yzd-5J-f8U" secondAttribute="centerX" id="6DE-Ai-DK9"/>
+                            <constraint firstItem="8oD-Kr-BAT" firstAttribute="leading" secondItem="OHj-WF-N3P" secondAttribute="leadingMargin" id="EDr-hS-QAQ"/>
+                            <constraint firstItem="vFR-dE-5DP" firstAttribute="top" secondItem="CGh-IG-qHv" secondAttribute="bottom" constant="30" id="Ie8-Up-ewT"/>
+                            <constraint firstItem="4PM-hE-aAO" firstAttribute="top" secondItem="Yzd-5J-f8U" secondAttribute="bottom" constant="21" id="OxF-9D-yN3"/>
+                            <constraint firstItem="4PM-hE-aAO" firstAttribute="centerX" secondItem="CGh-IG-qHv" secondAttribute="centerX" id="SNw-LR-SMF"/>
+                            <constraint firstItem="Yzd-5J-f8U" firstAttribute="centerX" secondItem="4PM-hE-aAO" secondAttribute="centerX" id="Tzx-hZ-dcn"/>
+                            <constraint firstItem="CGh-IG-qHv" firstAttribute="top" secondItem="4PM-hE-aAO" secondAttribute="bottom" constant="8" symbolic="YES" id="VS4-EE-a9A"/>
+                            <constraint firstItem="8oD-Kr-BAT" firstAttribute="trailing" secondItem="OHj-WF-N3P" secondAttribute="trailingMargin" id="inn-oT-OFT"/>
+                            <constraint firstItem="Yzd-5J-f8U" firstAttribute="leading" secondItem="OHj-WF-N3P" secondAttribute="leadingMargin" constant="6" id="mQC-AN-Of4"/>
+                            <constraint firstItem="Yzd-5J-f8U" firstAttribute="top" secondItem="8oD-Kr-BAT" secondAttribute="bottom" constant="24" id="rQl-YG-Jer"/>
+                            <constraint firstItem="8oD-Kr-BAT" firstAttribute="top" secondItem="mTr-wo-hbC" secondAttribute="bottom" constant="18" id="rel-G5-ZYn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="eq8-Xn-d5e"/>
+                    <connections>
+                        <outlet property="caloriesLabel" destination="4PM-hE-aAO" id="QLJ-cB-RI4"/>
+                        <outlet property="descriptionTextView" destination="Yzd-5J-f8U" id="owt-e2-mtJ"/>
+                        <outlet property="detailRatingLabel" destination="CGh-IG-qHv" id="pf6-jw-8LR"/>
+                        <outlet property="detailedImageView" destination="8oD-Kr-BAT" id="jWV-uD-RLe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="li1-Td-RO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1988" y="124"/>
+        </scene>
         <!--Cloud Meal Tracker-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -77,24 +143,24 @@
                     <navigationItem key="navigationItem" title="Cloud Meal Tracker" id="sqI-RU-EE3">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="6ll-LE-uuS">
                             <connections>
-                                <action selector="addMeal:" destination="BYZ-38-t0r" id="lNR-ce-UZm"/>
+                                <segue destination="tpF-to-aOz" kind="presentation" identifier="addSegue" id="F5I-PD-R6P"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="9e0-DC-7hu" id="2a3-og-HbW"/>
-                        <segue destination="Af0-ha-reN" kind="show" identifier="detailSegue" id="wFa-TD-t9Q"/>
                         <segue destination="T3U-zE-xF9" kind="presentation" identifier="loginSegue" id="nIX-nu-hAh"/>
+                        <segue destination="eVm-C9-6hK" kind="show" identifier="detailSegue" id="tPt-AX-iYO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1049" y="124"/>
         </scene>
-        <!--Detailed View Controller-->
+        <!--Add Meal View Controller-->
         <scene sceneID="5zH-Ol-SMp">
             <objects>
-                <viewController id="Af0-ha-reN" customClass="CTDetailedViewController" customModule="Cloud_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Af0-ha-reN" customClass="CTAddMealViewController" customModule="Cloud_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wXJ-dK-7HP"/>
                         <viewControllerLayoutGuide type="bottom" id="c7l-Ot-RwN"/>
@@ -104,17 +170,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yff-Qo-sIa">
-                                <rect key="frame" x="16" y="82" width="343" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="0Y6-14-PBl"/>
-                                    <constraint firstAttribute="width" constant="343" id="JN2-V9-HX9"/>
-                                </constraints>
+                                <rect key="frame" x="16" y="86" width="343" height="240"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-8h-uUz">
-                                <rect key="frame" x="20" y="380" width="335" height="180"/>
+                                <rect key="frame" x="20" y="380" width="335" height="130"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="2PX-7V-Ers"/>
+                                </constraints>
                                 <string key="text">
-
 
 
 Meal Description</string>
@@ -134,25 +198,47 @@ Meal Description</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Calories" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gi4-2Z-w9u">
+                                <rect key="frame" x="80" y="527" width="215" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="yff-Qo-sIa" firstAttribute="trailing" secondItem="bC9-UK-Ofd" secondAttribute="trailingMargin" id="41N-cK-Jp7"/>
-                            <constraint firstItem="PAC-pv-1Lp" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leading" constant="42" id="4bN-ns-Lcz"/>
-                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="top" secondItem="yff-Qo-sIa" secondAttribute="bottom" constant="12" id="C85-B4-Yvk"/>
-                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leading" constant="80" id="KaN-jI-gRo"/>
-                            <constraint firstItem="yff-Qo-sIa" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leadingMargin" id="LMG-6i-SE6"/>
-                            <constraint firstItem="FFm-8h-uUz" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leading" constant="20" id="Ojh-NT-66O"/>
-                            <constraint firstItem="FFm-8h-uUz" firstAttribute="top" secondItem="5kh-jC-4BZ" secondAttribute="bottom" constant="16" id="YEx-h1-xfJ"/>
-                            <constraint firstAttribute="trailing" secondItem="FFm-8h-uUz" secondAttribute="trailing" constant="20" id="fvT-RL-ogM"/>
-                            <constraint firstItem="PAC-pv-1Lp" firstAttribute="top" secondItem="FFm-8h-uUz" secondAttribute="bottom" constant="9" id="hE1-oF-f9K"/>
-                            <constraint firstAttribute="trailing" secondItem="PAC-pv-1Lp" secondAttribute="trailing" constant="42" id="jwb-oF-y8S"/>
-                            <constraint firstItem="yff-Qo-sIa" firstAttribute="top" secondItem="wXJ-dK-7HP" secondAttribute="bottom" constant="18" id="opQ-bf-vT5"/>
-                            <constraint firstItem="c7l-Ot-RwN" firstAttribute="top" secondItem="PAC-pv-1Lp" secondAttribute="bottom" constant="20" id="pd1-ah-7zF"/>
-                            <constraint firstAttribute="trailing" secondItem="5kh-jC-4BZ" secondAttribute="trailing" constant="80" id="prY-2y-nID"/>
+                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="centerX" secondItem="FFm-8h-uUz" secondAttribute="centerX" id="6uE-37-Deq"/>
+                            <constraint firstItem="yff-Qo-sIa" firstAttribute="top" secondItem="wXJ-dK-7HP" secondAttribute="bottom" constant="22" id="8gk-KA-Bkg"/>
+                            <constraint firstItem="PAC-pv-1Lp" firstAttribute="top" secondItem="Gi4-2Z-w9u" secondAttribute="bottom" constant="12" id="9by-wA-NQE"/>
+                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="trailing" secondItem="Gi4-2Z-w9u" secondAttribute="trailing" id="Bal-RO-2zE"/>
+                            <constraint firstAttribute="bottom" secondItem="PAC-pv-1Lp" secondAttribute="bottom" constant="20" symbolic="YES" id="Bu0-t4-d2R"/>
+                            <constraint firstItem="yff-Qo-sIa" firstAttribute="centerX" secondItem="5kh-jC-4BZ" secondAttribute="centerX" id="Fvh-Bj-KDv"/>
+                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="top" secondItem="yff-Qo-sIa" secondAttribute="bottom" constant="8" symbolic="YES" id="JGx-T3-o5N"/>
+                            <constraint firstItem="Gi4-2Z-w9u" firstAttribute="top" secondItem="FFm-8h-uUz" secondAttribute="bottom" constant="17" id="ZUg-TE-9md"/>
+                            <constraint firstItem="PAC-pv-1Lp" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leadingMargin" constant="26" id="gKo-ci-bwB"/>
+                            <constraint firstItem="yff-Qo-sIa" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leadingMargin" id="ggj-HP-VP1"/>
+                            <constraint firstItem="yff-Qo-sIa" firstAttribute="trailing" secondItem="bC9-UK-Ofd" secondAttribute="trailingMargin" id="h1M-jy-GSW"/>
+                            <constraint firstItem="FFm-8h-uUz" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leadingMargin" constant="4" id="lXL-hr-1o1"/>
+                            <constraint firstItem="FFm-8h-uUz" firstAttribute="top" secondItem="5kh-jC-4BZ" secondAttribute="bottom" constant="16" id="qdp-Fq-DkV"/>
+                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="leading" secondItem="Gi4-2Z-w9u" secondAttribute="leading" id="vSd-oP-sYL"/>
+                            <constraint firstItem="Gi4-2Z-w9u" firstAttribute="centerX" secondItem="PAC-pv-1Lp" secondAttribute="centerX" id="w1w-dt-Zfq"/>
+                            <constraint firstItem="5kh-jC-4BZ" firstAttribute="leading" secondItem="bC9-UK-Ofd" secondAttribute="leadingMargin" constant="64" id="x6D-KZ-Xz8"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="8nl-DY-xSh">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lOj-EV-Nym">
+                            <connections>
+                                <action selector="cancelButton:" destination="Af0-ha-reN" id="8x4-Sk-4jH"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Vfo-3B-wui">
+                            <connections>
+                                <action selector="saveButton:" destination="Af0-ha-reN" id="FN3-L6-Lpc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="caloriesTextField" destination="Gi4-2Z-w9u" id="Hkm-Df-0Ve"/>
                         <outlet property="descriptionTextView" destination="FFm-8h-uUz" id="nuv-Ge-q1S"/>
                         <outlet property="detailRatingLabel" destination="PAC-pv-1Lp" id="cGv-uL-4fc"/>
                         <outlet property="detailedImageView" destination="yff-Qo-sIa" id="ZJW-rZ-4gz"/>
@@ -161,7 +247,7 @@ Meal Description</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQS-jb-b5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1949.5999999999999" y="123.68815592203899"/>
+            <point key="canvasLocation" x="1988" y="-605.84707646176912"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Bn7-Vn-sq1">
@@ -405,6 +491,24 @@ Meal Description</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MgF-kB-YNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3002" y="925"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="q9g-9T-0We">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tpF-to-aOz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ACy-9c-k4F">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Af0-ha-reN" kind="relationship" relationship="rootViewController" id="9I3-ff-vlx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PZN-aS-a9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1049" y="-605"/>
         </scene>
     </scenes>
     <resources>

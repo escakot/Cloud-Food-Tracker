@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CTTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddMealDelegate, DetailedRatingDelegate {
 
   @IBOutlet weak var tableView: UITableView!
   var token: String?
@@ -27,7 +27,13 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   
   override func viewDidAppear(_ animated: Bool)
   {
-    if (NetworkManager.sharedManager.isLoggedIn) {
+    getMealList()
+  }
+  
+  func getMealList ()
+  {
+    if (NetworkManager.sharedManager.isLoggedIn)
+    {
       NetworkManager.sharedManager.loadUserMeals {(meals: [Meal]) in
         self.listOfMeals = meals
         OperationQueue.main.addOperation({ 
@@ -37,10 +43,25 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
     }
   }
   
-  @IBAction func addMeal(_ sender: UIBarButtonItem) {
-    performSegue(withIdentifier: "detailSegue", sender: nil)
+  
+  // Mark: Delegate Methods
+  func addMeal(meal: Meal)
+  {
+    NetworkManager.sharedManager.postNewMeal(meal: meal) {
+      OperationQueue.main.addOperation({
+        self.getMealList()
+      })
+    }
   }
   
+  func updateMealRating(meal: Meal)
+  {
+    NetworkManager.sharedManager.updateRating(meal: meal) {
+      OperationQueue.main.addOperation({
+        self.getMealList()
+      })
+    }
+  }
   
   // MARK: UITableView DataSource
   
@@ -73,9 +94,16 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     if (segue.identifier == "detailSegue")
     {
-      let indexPath = sender as! IndexPath
       let dvc = segue.destination as! CTDetailedViewController
+      let indexPath = sender as! IndexPath
+      dvc.delegate = self
       dvc.meal = listOfMeals[indexPath.row]
+    }
+    if (segue.identifier == "addSegue")
+    {
+      let nav = segue.destination as! UINavigationController
+      let dvc = nav.viewControllers[0] as! CTAddMealViewController
+      dvc.delegate = self
     }
   }
 }

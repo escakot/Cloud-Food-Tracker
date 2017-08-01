@@ -1,30 +1,30 @@
 //
-//  CTDetailedViewController.swift
+//  CTAddMealViewController.swift
 //  Cloud Tracker
 //
-//  Created by Errol Cheong on 2017-07-31.
+//  Created by Errol Cheong on 2017-08-01.
 //  Copyright © 2017 Errol Cheong. All rights reserved.
 //
 
 import UIKit
 
-protocol DetailedRatingDelegate: class {
+protocol AddMealDelegate: class
+{
   
-  func updateMealRating(meal:Meal) -> Void
+  func addMeal(meal:Meal)
   
 }
 
-class CTDetailedViewController: UIViewController, UITextViewDelegate {
-  
+class CTAddMealViewController: UIViewController, UITextViewDelegate {
   
   @IBOutlet weak var detailedImageView: UIImageView!
+  @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var descriptionTextView: UITextView!
   @IBOutlet weak var detailRatingLabel: UILabel!
-  @IBOutlet weak var caloriesLabel: UILabel!
+  @IBOutlet weak var caloriesTextField: UITextField!
   
-  var meal: Meal!
   let starRating = ["☆☆☆☆☆", "★☆☆☆☆","★★☆☆☆", "★★★☆☆", "★★★★☆", "★★★★★"]
-  weak var delegate:DetailedRatingDelegate?
+  weak var delegate:AddMealDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,22 +36,38 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate {
     let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(ratingLabelTapped(sender:)))
     detailRatingLabel.addGestureRecognizer(tapGesture)
     detailRatingLabel.isUserInteractionEnabled = true
-    
-    navigationController!.navigationItem.title = meal.title!
-    descriptionTextView.text = meal.mealDescription!
-    caloriesLabel.text = String(format: "Calories: %li", meal.calories!)
-    guard meal.rating != nil else {
-      meal.rating = 0
-      detailRatingLabel.text = starRating[0]
-      return
-    }
-    detailRatingLabel.text = starRating[meal.rating!]
   }
   
-  override func viewDidDisappear(_ animated: Bool)
-  {
+  @IBAction func saveButton(_ sender: UIBarButtonItem) {
+    let meal = Meal()
+    meal.title = titleTextField.text
+    meal.mealDescription = descriptionTextView.text
+    meal.calories = Int(caloriesTextField.text!)
     meal.rating = starRating.index(of: detailRatingLabel.text!)
-    delegate!.updateMealRating(meal: meal)
+    
+    delegate!.addMeal(meal: meal)
+    dismiss(animated: true)
+  }
+  @IBAction func cancelButton(_ sender: UIBarButtonItem) {
+    dismiss(animated: true)
+  }
+  
+  // MARK: TextView Delegate
+  func textViewDidBeginEditing(_ textView: UITextView)
+  {
+    if (textView.text == "\n\n\nMeal Description")
+    {
+      textView.textColor = UIColor.black
+      textView.text = ""
+    }
+  }
+  func textViewDidEndEditing(_ textView: UITextView)
+  {
+    if (textView.text == "")
+    {
+      textView.textColor = UIColor.lightGray
+      textView.text = "\n\n\nMeal Description"
+    }
   }
   
   // MARK: Touch Events

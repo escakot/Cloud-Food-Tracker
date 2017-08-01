@@ -31,7 +31,7 @@ class NetworkManager: NSObject {
     performQuery(with: urlRequest) { (data: Data) in
       do {
         let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [String:AnyObject]
-        print(responseData.description)
+//        print(responseData.description)
         guard responseData["username"] as? String != nil, responseData["password"] as? String != nil else {
           completionHandler(false)
           return
@@ -58,7 +58,7 @@ class NetworkManager: NSObject {
       do {
         let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [[String:AnyObject]]
         var mealArray: [Meal] = []
-        print (responseData.description)
+//        print (responseData.description)
         for mealDict in responseData
         {
           let meal = Meal(with: mealDict)
@@ -71,13 +71,41 @@ class NetworkManager: NSObject {
     }
   }
   
-  func loadMealDetails ()
+  func postNewMeal (meal:Meal, completionHandler: @escaping () -> Void)
   {
     components?.path = "/users/me/meals/"
+    let titleQuery = URLQueryItem(name: "title", value: meal.title!)
+    let descriptionQuery = URLQueryItem(name: "description", value: meal.mealDescription!)
+    let caloriesQuery = URLQueryItem(name: "calories", value: String(format: "%li", meal.calories!))
+    components?.queryItems = [titleQuery, descriptionQuery, caloriesQuery]
+    
     var urlRequest = URLRequest(url: components!.url!)
+    urlRequest.httpMethod = "POST"
     urlRequest.allHTTPHeaderFields = ["Content-Type":"application/json","token":token]
+    
+    performQuery(with: urlRequest) { (data: Data) in
+      completionHandler()
+    }
+    
   }
   
+  func updateRating (meal:Meal, completionHandler: @escaping () -> Void)
+  {
+    
+    components?.path = String(format: "/users/me/meals/%li/rate", meal.id!)
+    let ratingQuery = URLQueryItem(name: "rating", value: String(format: "%li", meal.rating!))
+    components?.queryItems = [ratingQuery]
+    print("\(components?.url!)")
+    
+    var urlRequest = URLRequest(url: components!.url!)
+    urlRequest.httpMethod = "POST"
+    urlRequest.allHTTPHeaderFields = ["Content-Type":"application/json","token":token]
+    
+    performQuery(with: urlRequest) { (data: Data) in
+      completionHandler()
+    }
+    
+  }
   
   // MARK: Query Method
   func performQuery(with urlRequest:URLRequest, returnJSONData: @escaping (Data) -> ())

@@ -17,6 +17,15 @@ class Meal: NSObject {
   var id: Int?
   var rating: Int?
   
+  override init() {
+    title = ""
+    mealDescription = ""
+    imagePath = nil
+    calories = 0
+    id = nil
+    rating = 0
+  }
+  
   init(with info:[String:AnyObject]) {
     title = info["title"] as? String
     mealDescription = info["description"] as? String
