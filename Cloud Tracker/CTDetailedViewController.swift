@@ -28,6 +28,7 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate {
       
       let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(ratingLabelTapped(sender:)))
       detailRatingLabel.addGestureRecognizer(tapGesture)
+      detailRatingLabel.isUserInteractionEnabled = true
       
       titleTextField.text = meal.title!
       descriptionTextView.text = meal.mealDescription!
@@ -60,10 +61,11 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate {
   // MARK: Touch Events
   func ratingLabelTapped(sender: UITapGestureRecognizer)
   {
+    
     if (sender.state == UIGestureRecognizerState.ended)
     {
       let tapLocation = sender.location(in: detailRatingLabel)
-      let ratingTap = Int(floor((tapLocation.x/detailRatingLabel.frame.size.width) * 5 ))
+      let ratingTap = Int(ceil((tapLocation.x/detailRatingLabel.frame.size.width) * 5 ))
       detailRatingLabel.text = starRating[ratingTap];
     }
   }
