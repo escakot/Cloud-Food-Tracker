@@ -48,8 +48,10 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   func addMeal(meal: Meal)
   {
     NetworkManager.sharedManager.postNewMeal(meal: meal) {
-      OperationQueue.main.addOperation({
-        self.getMealList()
+      NetworkManager.sharedManager.updateRating(meal: meal, completionHandler: { 
+        OperationQueue.main.addOperation({
+          self.getMealList()
+        })
       })
     }
   }

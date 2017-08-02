@@ -95,7 +95,6 @@ class NetworkManager: NSObject {
     components?.path = String(format: "/users/me/meals/%li/rate", meal.id!)
     let ratingQuery = URLQueryItem(name: "rating", value: String(format: "%li", meal.rating!))
     components?.queryItems = [ratingQuery]
-    print("\(components?.url!)")
     
     var urlRequest = URLRequest(url: components!.url!)
     urlRequest.httpMethod = "POST"

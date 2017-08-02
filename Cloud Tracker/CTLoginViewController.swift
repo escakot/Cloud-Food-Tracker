@@ -12,7 +12,9 @@ class CTLoginViewController: UIViewController {
   
   @IBOutlet weak var usernameLoginTextField: UITextField!
   @IBOutlet weak var passwordLoginTextField: UITextField!
+  @IBOutlet weak var checkMarkImageView: UIImageView!
   
+  var isRememberMe: Bool! = false
   
   let alertController = UIAlertController(title: "Invalid username/password", message: "Invalid username/password", preferredStyle: UIAlertControllerStyle.alert)
   
@@ -52,7 +54,8 @@ class CTLoginViewController: UIViewController {
   
   
   @IBAction func rememberMeButton(_ sender: UIButton) {
-    
+    isRememberMe = !isRememberMe
+    checkMarkImageView.isHidden = !checkMarkImageView.isHidden
   }
   
   
