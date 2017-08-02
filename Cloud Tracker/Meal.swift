@@ -16,6 +16,7 @@ class Meal: NSObject {
   var calories: Int?
   var id: Int?
   var rating: Int?
+  var imageData: Data? = nil
   
   override init() {
     title = ""

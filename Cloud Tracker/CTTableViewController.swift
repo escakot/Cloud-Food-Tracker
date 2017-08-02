@@ -47,8 +47,9 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   // Mark: Delegate Methods
   func addMeal(meal: Meal)
   {
-    NetworkManager.sharedManager.postNewMeal(meal: meal) {
-      NetworkManager.sharedManager.updateRating(meal: meal, completionHandler: { 
+    NetworkManager.sharedManager.postNewMeal(meal: meal) { (savedMeal:Meal) in
+      NetworkManager.sharedManager.updateRating(meal: savedMeal, completionHandler: {
+        NetworkManager.sharedManager.updatePhoto(meal: savedMeal, completionHandler: <#T##() -> Void#>)
         OperationQueue.main.addOperation({
           self.getMealList()
         })

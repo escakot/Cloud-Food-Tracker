@@ -14,7 +14,7 @@ protocol DetailedRatingDelegate: class {
   
 }
 
-class CTDetailedViewController: UIViewController, UITextViewDelegate {
+class CTDetailedViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   
   @IBOutlet weak var detailedImageView: UIImageView!
@@ -36,6 +36,10 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate {
     let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(ratingLabelTapped(sender:)))
     detailRatingLabel.addGestureRecognizer(tapGesture)
     detailRatingLabel.isUserInteractionEnabled = true
+    
+    let viewTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imagePickerTap(sender:)))
+    detailedImageView.isUserInteractionEnabled = true
+    detailedImageView.addGestureRecognizer(viewTapGesture)
     
     navigationController!.navigationItem.title = meal.title!
     descriptionTextView.text = meal.mealDescription!
@@ -64,5 +68,15 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate {
       let ratingTap = Int(ceil((tapLocation.x/detailRatingLabel.frame.size.width) * 5 ))
       detailRatingLabel.text = starRating[ratingTap];
     }
+  }
+  
+  func imagePickerTap(sender: UITapGestureRecognizer)
+  {
+    let imagePicker = UIImagePickerController()
+    imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+    imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+    imagePicker.delegate = self
+    
+    present(imagePicker, animated: true)
   }
 }

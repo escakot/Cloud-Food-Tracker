@@ -40,6 +40,8 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePick
     let viewTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imagePickerTap(sender:)))
     addImageView.isUserInteractionEnabled = true
     addImageView.addGestureRecognizer(viewTapGesture)
+    
+    addRatingLabel.text = starRating[0]
   }
   
   @IBAction func saveButton(_ sender: UIBarButtonItem) {
@@ -48,6 +50,10 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePick
     meal.mealDescription = descriptionTextView.text
     meal.calories = Int(caloriesTextField.text!)
     meal.rating = starRating.index(of: addRatingLabel.text!)
+    if (addImageView.image != nil)
+    {
+      meal.imageData = UIImageJPEGRepresentation(addImageView.image!, 1.0)
+    }
     
     delegate!.addMeal(meal: meal)
     dismiss(animated: true)
@@ -83,6 +89,7 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePick
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
   {
     let pickedImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
+    
     addImageView.image = pickedImage
     dismiss(animated: true)
   }

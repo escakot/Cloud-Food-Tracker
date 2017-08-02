@@ -72,7 +72,7 @@ class NetworkManager: NSObject {
     }
   }
   
-  func postNewMeal (meal:Meal, completionHandler: @escaping () -> Void)
+  func postNewMeal (meal:Meal, completionHandler: @escaping (Meal) -> Void)
   {
     components?.path = "/users/me/meals/"
     let titleQuery = URLQueryItem(name: "title", value: meal.title!)
@@ -85,7 +85,16 @@ class NetworkManager: NSObject {
     urlRequest.allHTTPHeaderFields = ["Content-Type":"application/json","token":token]
     
     performQuery(with: urlRequest) { (data: Data) in
-      completionHandler()
+      
+      do {
+        let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [String:AnyObject]
+        print(responseData.description)
+        let newMeal = Meal(with: responseData["meal"]! as! [String : AnyObject])
+        newMeal.rating = meal.rating!
+        completionHandler(newMeal)
+      } catch {
+        print(error.localizedDescription)
+      }
     }
     
   }
@@ -105,6 +114,14 @@ class NetworkManager: NSObject {
       completionHandler()
     }
     
+  }
+  
+  func updatePhoto (meal:Meal, completionHandler: @escaping () -> Void)
+  {
+    components?.path = String(format: "/users/me/meals/%li/photo", meal.id!)
+    var urlRequest = URLRequest(url: components!.url!)
+    urlRequest.httpMethod = "POST"
+//    urlRequest.httpBody = 
   }
   
   // MARK: UserDefault Methods
