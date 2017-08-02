@@ -13,6 +13,7 @@ class CTLoginViewController: UIViewController {
   @IBOutlet weak var usernameLoginTextField: UITextField!
   @IBOutlet weak var passwordLoginTextField: UITextField!
   @IBOutlet weak var checkMarkImageView: UIImageView!
+  @IBOutlet weak var logoImageView: UIImageView!
   
   var isRememberMe: Bool! = false
   
@@ -22,6 +23,18 @@ class CTLoginViewController: UIViewController {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+    
+    NetworkManager.sharedManager.loadUserDefaults { (isRememberMe:Bool,username:String,password:String) in
+      OperationQueue.main.addOperation({
+        self.isRememberMe = isRememberMe
+        self.checkMarkImageView.isHidden = !isRememberMe
+        if (isRememberMe)
+        {
+          self.usernameLoginTextField.text = username
+          self.passwordLoginTextField.text = password
+        }
+      })
+    }
     alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
   }
   
@@ -41,6 +54,10 @@ class CTLoginViewController: UIViewController {
             })
           } else {
             OperationQueue.main.addOperation({
+              if (NetworkManager.sharedManager.isLoggedIn)
+              {
+                NetworkManager.sharedManager.saveUserDefaults(isRememberMe: self.isRememberMe)
+              }
               self.dismiss(animated: true, completion: nil)
             })
           }
@@ -50,8 +67,6 @@ class CTLoginViewController: UIViewController {
       self.present(alertController, animated: true)
     }
   }
-  
-  
   
   @IBAction func rememberMeButton(_ sender: UIButton) {
     isRememberMe = !isRememberMe

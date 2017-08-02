@@ -89,6 +89,15 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   
   
   // MARK: Navigation Methods
+  
+  @IBAction func logoutButton(_ sender: UIBarButtonItem)
+  {
+    performSegue(withIdentifier: "loginSegue", sender: nil)
+    listOfMeals = []
+    tableView.reloadData()
+  }
+  
+  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
     if (segue.identifier == "loginSegue")

@@ -37,6 +37,7 @@ class CTSignUpViewController: UIViewController {
             })
           } else {
             OperationQueue.main.addOperation({
+              NetworkManager.sharedManager.saveUserDefaults(isRememberMe: true)
               self.view.window!.rootViewController?.dismiss(animated: false)
             })
           }

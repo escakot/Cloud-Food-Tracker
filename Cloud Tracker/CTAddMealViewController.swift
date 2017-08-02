@@ -15,12 +15,12 @@ protocol AddMealDelegate: class
   
 }
 
-class CTAddMealViewController: UIViewController, UITextViewDelegate {
+class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
-  @IBOutlet weak var detailedImageView: UIImageView!
+  @IBOutlet weak var addImageView: UIImageView!
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var descriptionTextView: UITextView!
-  @IBOutlet weak var detailRatingLabel: UILabel!
+  @IBOutlet weak var addRatingLabel: UILabel!
   @IBOutlet weak var caloriesTextField: UITextField!
   
   let starRating = ["☆☆☆☆☆", "★☆☆☆☆","★★☆☆☆", "★★★☆☆", "★★★★☆", "★★★★★"]
@@ -34,8 +34,12 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate {
     descriptionTextView.layer.borderWidth = 1.0
     
     let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(ratingLabelTapped(sender:)))
-    detailRatingLabel.addGestureRecognizer(tapGesture)
-    detailRatingLabel.isUserInteractionEnabled = true
+    addRatingLabel.isUserInteractionEnabled = true
+    addRatingLabel.addGestureRecognizer(tapGesture)
+    
+    let viewTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imagePickerTap(sender:)))
+    addImageView.isUserInteractionEnabled = true
+    addImageView.addGestureRecognizer(viewTapGesture)
   }
   
   @IBAction func saveButton(_ sender: UIBarButtonItem) {
@@ -43,12 +47,43 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate {
     meal.title = titleTextField.text
     meal.mealDescription = descriptionTextView.text
     meal.calories = Int(caloriesTextField.text!)
-    meal.rating = starRating.index(of: detailRatingLabel.text!)
+    meal.rating = starRating.index(of: addRatingLabel.text!)
     
     delegate!.addMeal(meal: meal)
     dismiss(animated: true)
   }
   @IBAction func cancelButton(_ sender: UIBarButtonItem) {
+    dismiss(animated: true)
+  }
+  
+  
+  // MARK: Touch Events
+  func ratingLabelTapped(sender: UITapGestureRecognizer)
+  {
+    
+    if (sender.state == UIGestureRecognizerState.ended)
+    {
+      let tapLocation = sender.location(in: addRatingLabel)
+      let ratingTap = Int(ceil((tapLocation.x/addRatingLabel.frame.size.width) * 5 ))
+      addRatingLabel.text = starRating[ratingTap];
+    }
+  }
+  
+  func imagePickerTap(sender: UITapGestureRecognizer)
+  {
+    let imagePicker = UIImagePickerController()
+    imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+    imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+    imagePicker.delegate = self
+    
+    present(imagePicker, animated: true)
+  }
+  
+  // MARK: UIPickerController Delegate
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+  {
+    let pickedImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
+    addImageView.image = pickedImage
     dismiss(animated: true)
   }
   
@@ -67,18 +102,6 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate {
     {
       textView.textColor = UIColor.lightGray
       textView.text = "\n\n\nMeal Description"
-    }
-  }
-  
-  // MARK: Touch Events
-  func ratingLabelTapped(sender: UITapGestureRecognizer)
-  {
-    
-    if (sender.state == UIGestureRecognizerState.ended)
-    {
-      let tapLocation = sender.location(in: detailRatingLabel)
-      let ratingTap = Int(ceil((tapLocation.x/detailRatingLabel.frame.size.width) * 5 ))
-      detailRatingLabel.text = starRating[ratingTap];
     }
   }
 }

@@ -15,6 +15,7 @@ class NetworkManager: NSObject {
   var passwordInfo: String!
   var token: String!
   var isLoggedIn: Bool! = false
+  let userDefaults = UserDefaults.standard
   
   private override init() { }
   
@@ -104,6 +105,30 @@ class NetworkManager: NSObject {
       completionHandler()
     }
     
+  }
+  
+  // MARK: UserDefault Methods
+  
+  func saveUserDefaults(isRememberMe:Bool)
+  {
+    guard usernameInfo != nil, passwordInfo != nil else {
+      return
+    }
+    userDefaults.set(isRememberMe, forKey: "rememberMe")
+    userDefaults.set(usernameInfo, forKey: "username")
+    userDefaults.set(passwordInfo, forKey: "password")
+    userDefaults.synchronize()
+  }
+  
+  func loadUserDefaults(completionHandler: @escaping (Bool, String, String) -> Void)
+  {
+    guard userDefaults.value(forKey: "rememberMe") != nil else {
+      return
+    }
+    let isRememberMe = userDefaults.value(forKey: "rememberMe") as! Bool
+    let username = userDefaults.value(forKey: "username") as! String
+    let password = userDefaults.value(forKey: "password") as! String
+    completionHandler(isRememberMe, username, password)
   }
   
   // MARK: Query Method
