@@ -10,7 +10,7 @@ import UIKit
 
 protocol DetailedRatingDelegate: class {
   
-  func updateMealRating(meal:Meal) -> Void
+  func updateMeal(meal:Meal) -> Void
   
 }
 
@@ -41,7 +41,14 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate, UIImagePic
     detailedImageView.isUserInteractionEnabled = true
     detailedImageView.addGestureRecognizer(viewTapGesture)
     
-    navigationController!.navigationItem.title = meal.title!
+    title = meal.title!
+    if (meal.imagePath != nil)
+    {
+      do { detailedImageView.image = try UIImage(data: Data(contentsOf: URL.init(string: meal.imagePath!)!))
+      } catch {
+        print(error.localizedDescription)
+      }
+    }
     descriptionTextView.text = meal.mealDescription!
     caloriesLabel.text = String(format: "Calories: %li", meal.calories!)
     guard meal.rating != nil else {
@@ -52,10 +59,16 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate, UIImagePic
     detailRatingLabel.text = starRating[meal.rating!]
   }
   
-  override func viewDidDisappear(_ animated: Bool)
-  {
-    meal.rating = starRating.index(of: detailRatingLabel.text!)
-    delegate!.updateMealRating(meal: meal)
+  override func viewWillDisappear(_ animated: Bool) {
+    if (isMovingFromParentViewController)
+    {
+      meal.rating = starRating.index(of: detailRatingLabel.text!)
+      delegate!.updateMeal(meal: meal)
+    }
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    
   }
   
   // MARK: Touch Events
@@ -79,4 +92,18 @@ class CTDetailedViewController: UIViewController, UITextViewDelegate, UIImagePic
     
     present(imagePicker, animated: true)
   }
+  
+  // MARK: UIPickerController Delegate
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+  {
+    if let pickedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+      detailedImageView.image = pickedImage
+      meal.imageData = UIImageJPEGRepresentation(detailedImageView.image!, 1.0)
+    } else {
+      print("Image error")
+    }
+    dismiss(animated: true)
+  }
+  
+  
 }

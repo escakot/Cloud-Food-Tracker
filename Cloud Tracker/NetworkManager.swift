@@ -11,14 +11,18 @@ import UIKit
 class NetworkManager: NSObject {
   
   var components = URLComponents(string:"https://cloud-tracker.herokuapp.com")
+  var imgurComponents = URLComponents(string: "https://api.imgur.com")
   var usernameInfo: String!
   var passwordInfo: String!
   var token: String!
   var isLoggedIn: Bool! = false
   let userDefaults = UserDefaults.standard
   
-  private override init() { }
+  let imgurClientID = "8152929a5336325"
+  let boundaryConstant = "----------lp0zaQ1mXskWo20CnDjeI39vnfjri48"
   
+  private override init() { }
+ 
   static let sharedManager = NetworkManager()
   
   func userLoginSignUp (username:String, password:String, identifier:String, completionHandler: @escaping (Bool) -> Void)
@@ -90,7 +94,8 @@ class NetworkManager: NSObject {
         let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [String:AnyObject]
         print(responseData.description)
         let newMeal = Meal(with: responseData["meal"]! as! [String : AnyObject])
-        newMeal.rating = meal.rating!
+        newMeal.rating = meal.rating
+        newMeal.imageData = meal.imageData
         completionHandler(newMeal)
       } catch {
         print(error.localizedDescription)
@@ -116,12 +121,90 @@ class NetworkManager: NSObject {
     
   }
   
-  func updatePhoto (meal:Meal, completionHandler: @escaping () -> Void)
+  func updateImagePath (meal:Meal, completionHandler: @escaping () -> Void)
   {
+    guard meal.imagePath != nil else {
+      completionHandler()
+      return
+    }
     components?.path = String(format: "/users/me/meals/%li/photo", meal.id!)
+    
+//    let encodedPath = meal.imagePath!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+//    let imagePathQuery = URLQueryItem(name: "photo", value: encodedPath)
+//    components?.queryItems = [imagePathQuery]
+    
     var urlRequest = URLRequest(url: components!.url!)
     urlRequest.httpMethod = "POST"
-//    urlRequest.httpBody = 
+    urlRequest.allHTTPHeaderFields = ["Content-Type":"application/json","token":token]
+    
+//    let bodyString = String(format: "photo=%@", meal.imagePath!).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+//    print(bodyString!)
+//    urlRequest.httpBody = bodyString!.data(using: String.Encoding.utf8)!
+    let json: [String: Any] = ["photo":meal.imagePath!]
+    let jsonData = try? JSONSerialization.data(withJSONObject:json, options:[])
+    urlRequest.httpBody = jsonData
+    
+    performQuery(with: urlRequest) { (data: Data) in
+      do {
+        let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [String:AnyObject]
+        print(responseData.description)
+        completionHandler()
+      } catch {
+        print(error.localizedDescription)
+      }
+    }
+  }
+  
+  func postPhotoToImgur (meal:Meal, completionHandler: @escaping (Meal) -> Void)
+  {
+    guard meal.imagePath == nil, meal.imageData != nil else {
+      completionHandler(meal)
+      return
+    }
+    imgurComponents?.path = "/3/image"
+    var params: [String: String] = [:];
+    params["type"] = "file"
+    params["name"] = meal.title!
+    
+    let contentType = String(format: "multipart/form-data; boundary=%@", boundaryConstant)
+    
+    var urlRequest = URLRequest(url: imgurComponents!.url!)
+    urlRequest.allHTTPHeaderFields = ["authorization":String(format:"Client-ID %@", imgurClientID),
+                                      "Content-Type":contentType]
+    urlRequest.httpMethod = "POST"
+    
+    var body = Data()
+    
+    for (key, param) in params
+    {
+      body.append(String(format:"--%@\r\n", boundaryConstant).data(using: String.Encoding.utf8)!)
+      body.append(String(format:"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key).data(using: String.Encoding.utf8)!)
+      body.append(String(format:"%@\r\n", param).data(using: String.Encoding.utf8)!)
+    }
+    
+    if (meal.imageData != nil)
+    {
+      body.append(String(format:"--%@\r\n", boundaryConstant).data(using: String.Encoding.utf8)!)
+      body.append(String(format:"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n").data(using: String.Encoding.utf8)!)
+      body.append(String(format:"Content-Type: image/jpeg\r\n\r\n").data(using: String.Encoding.utf8)!)
+      body.append(meal.imageData!)
+      body.append(String(format:"\r\n").data(using: String.Encoding.utf8)!)
+    }
+    body.append(String(format:"--%@--\r\n", boundaryConstant).data(using: String.Encoding.utf8)!)
+    
+    urlRequest.httpBody = body
+    
+    performQuery(with: urlRequest) { (data: Data) in
+      do {
+        let responseData = try JSONSerialization.jsonObject(with: data, options:[]) as! [String:AnyObject]
+        print(responseData.description)
+        let imageLink = responseData["data"]!["link"] as! String
+        meal.imagePath = imageLink.replacingOccurrences(of: "http", with: "https")
+        completionHandler(meal)
+      } catch {
+        print(error.localizedDescription)
+      }
+    }
   }
   
   // MARK: UserDefault Methods

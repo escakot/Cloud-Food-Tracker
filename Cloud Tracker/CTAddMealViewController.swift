@@ -42,6 +42,11 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePick
     addImageView.addGestureRecognizer(viewTapGesture)
     
     addRatingLabel.text = starRating[0]
+    
+    descriptionTextView.layer.borderColor = UIColor.darkGray.cgColor
+    descriptionTextView.layer.borderWidth = 1.0
+    descriptionTextView.textColor = UIColor.lightGray
+    descriptionTextView.delegate = self
   }
   
   @IBAction func saveButton(_ sender: UIBarButtonItem) {
@@ -88,9 +93,11 @@ class CTAddMealViewController: UIViewController, UITextViewDelegate, UIImagePick
   // MARK: UIPickerController Delegate
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
   {
-    let pickedImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
-    
-    addImageView.image = pickedImage
+    if let pickedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+      addImageView.image = pickedImage
+    } else {
+      print("Image error")
+    }
     dismiss(animated: true)
   }
   

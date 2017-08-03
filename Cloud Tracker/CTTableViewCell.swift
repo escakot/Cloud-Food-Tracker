@@ -19,7 +19,12 @@ class CTTableViewCell: UITableViewCell {
   
   var meal : Meal! {
     didSet {
-//      cellImageView.image = UIImage.init(named: meal.imagePath!)
+      if meal.imagePath != nil {
+        do { cellImageView.image = try UIImage(data: Data(contentsOf: URL.init(string: meal.imagePath!)!))
+        } catch {
+          print(error.localizedDescription)
+        }
+      }
       titleLabel.text = meal.title!
       guard meal.rating != nil  else {
         starRatingLabel.text = starRating[0]

@@ -13,11 +13,23 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   @IBOutlet weak var tableView: UITableView!
   var token: String?
   var listOfMeals: [Meal] = []
+  let activityIndicator = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+  let refreshControl = UIRefreshControl()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
+    //Activity Indicator Setup
+    activityIndicator.frame.origin.x = view.frame.size.width/2 - activityIndicator.frame.width/2
+    activityIndicator.frame.origin.y = view.frame.size.height/2 - activityIndicator.frame.height/2
+    view.addSubview(activityIndicator)
     
+    //Refresh Control
+    refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+    refreshControl.addTarget(self, action: #selector(refreshPull), for: UIControlEvents.valueChanged)
+    tableView.addSubview(refreshControl)
+    
+    //Present Login
     if (listOfMeals.isEmpty)
     {
       performSegue(withIdentifier: "loginSegue", sender: nil)
@@ -27,6 +39,16 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   
   override func viewDidAppear(_ animated: Bool)
   {
+    if (listOfMeals.isEmpty)
+    {
+      activityIndicator.startAnimating()
+      getMealList()
+    }
+  }
+  
+  func refreshPull ()
+  {
+    activityIndicator.startAnimating()
     getMealList()
   }
   
@@ -38,6 +60,8 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
         self.listOfMeals = meals
         OperationQueue.main.addOperation({ 
           self.tableView.reloadData()
+          self.activityIndicator.stopAnimating()
+          self.refreshControl.endRefreshing()
         })
       }
     }
@@ -47,21 +71,30 @@ class CTTableViewController: UIViewController, UITableViewDataSource, UITableVie
   // Mark: Delegate Methods
   func addMeal(meal: Meal)
   {
+    activityIndicator.startAnimating()
     NetworkManager.sharedManager.postNewMeal(meal: meal) { (savedMeal:Meal) in
       NetworkManager.sharedManager.updateRating(meal: savedMeal, completionHandler: {
-        NetworkManager.sharedManager.updatePhoto(meal: savedMeal, completionHandler: <#T##() -> Void#>)
-        OperationQueue.main.addOperation({
-          self.getMealList()
+        NetworkManager.sharedManager.postPhotoToImgur(meal:savedMeal, completionHandler: { (mealWithPhoto: Meal) in
+          NetworkManager.sharedManager.updateImagePath(meal: mealWithPhoto, completionHandler: {
+            OperationQueue.main.addOperation({
+              self.getMealList()
+            })
+          })
         })
       })
     }
   }
   
-  func updateMealRating(meal: Meal)
+  func updateMeal(meal: Meal)
   {
+    activityIndicator.startAnimating()
     NetworkManager.sharedManager.updateRating(meal: meal) {
-      OperationQueue.main.addOperation({
-        self.getMealList()
+      NetworkManager.sharedManager.postPhotoToImgur(meal:meal, completionHandler: { (mealWithPhoto: Meal) in
+        NetworkManager.sharedManager.updateImagePath(meal: mealWithPhoto, completionHandler: {
+          OperationQueue.main.addOperation({
+            self.getMealList()
+          })
+        })
       })
     }
   }
