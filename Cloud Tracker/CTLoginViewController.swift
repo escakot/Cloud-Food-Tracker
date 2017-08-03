@@ -10,6 +10,7 @@ import UIKit
 
 class CTLoginViewController: UIViewController {
   
+  @IBOutlet weak var loginScrollView: UIScrollView!
   @IBOutlet weak var usernameLoginTextField: UITextField!
   @IBOutlet weak var passwordLoginTextField: UITextField!
   @IBOutlet weak var checkMarkImageView: UIImageView!
@@ -81,4 +82,8 @@ class CTLoginViewController: UIViewController {
     //    dvc.token = sender as? String
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+//    view.endEditing(true)
+  }
 }
